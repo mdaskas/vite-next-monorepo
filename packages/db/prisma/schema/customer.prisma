@@ -1,0 +1,60 @@
+model Customer {
+    id    Int    @id @default(autoincrement())
+    code  String @unique
+    name  String
+    email String @unique
+    phone String
+
+    billingTermId Int
+    billingTerm   BillingTerm? @relation(fields: [billingTermId], references: [id])
+
+    shippingTermId Int
+    shippingTerm   ShippingTerm? @relation(fields: [shippingTermId], references: [id])
+
+    billToAddressId Int?     @unique
+    billToAddress   Address? @relation("BillTo", fields: [billToAddressId], references: [id])
+
+    shipToAddresses Address[] @relation("ShipTo")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Address {
+    id      Int     @id @default(autoincrement())
+    street1 String
+    street2 String?
+    city    String
+    state   String
+    zip     String
+    country String  @default("US")
+
+    shipToCustomerId Int?
+    shipToCustomer   Customer? @relation("ShipTo", fields: [shipToCustomerId], references: [id])
+
+    billToCustomer Customer? @relation("BillTo")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model BillingTerm {
+    id          Int      @id @default(autoincrement())
+    code        String   @unique
+    description String
+    dueDays     Int
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    customers Customer[]
+}
+
+model ShippingTerm {
+    id          Int      @id @default(autoincrement())
+    code        String   @unique
+    description String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    customers Customer[]
+}

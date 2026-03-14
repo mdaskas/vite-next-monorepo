@@ -1,0 +1,27 @@
+{
+  "name": "@repo/db",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./prisma/generated/prisma/models": "./prisma/generated/prisma/models.ts",
+    "./prisma/generated/*": "./prisma/generated/*",
+    "./lib/prisma": "./lib/prisma.ts"
+  },
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "prisma db seed",
+    "db:deploy": "prisma migrate deploy"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.3.0",
+    "prisma": "^7.5.0",
+    "tsx": "^4.21.0"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.5.0",
+    "@prisma/client": "^7.5.0",
+    "dotenv": "^17.3.1",
+    "pg": "^8.20.0"
+  }
+}
