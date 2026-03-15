@@ -6,6 +6,7 @@ import type {
 
 export interface IShippingTermRepository {
     findAll(limit?: number, offset?: number): Promise<IShippingTermDTO[]>
+    count(): Promise<number>
     findById(id: number): Promise<IShippingTermDTO | null>
     findByCode(code: string): Promise<IShippingTermDTO | null>
     create(input: CreateShippingTermInput): Promise<IShippingTermDTO>

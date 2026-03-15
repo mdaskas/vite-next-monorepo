@@ -38,8 +38,8 @@ export class ProductCategoryController implements IProductCategoryController {
                 ? parseInt(req.query.offset as string)
                 : undefined
 
-            const categories = await this.service.getAll(limit, offset)
-            res.json(categories)
+            const result = await this.service.getAll(limit, offset)
+            res.json(result)
         } catch (error) {
             next(error)
         }

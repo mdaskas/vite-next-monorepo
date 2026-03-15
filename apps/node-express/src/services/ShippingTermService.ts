@@ -18,9 +18,13 @@ export class ShippingTermService
         this.repository = repository
     }
 
-    async getAll(limit?: number, offset?: number) {
+    async getAll(limit = 10, offset = 0) {
         this.childLogger.debug('getAll called')
-        return this.repository.findAll(limit, offset)
+        const [data, total] = await Promise.all([
+            this.repository.findAll(limit, offset),
+            this.repository.count()
+        ])
+        return { data, total, limit, offset }
     }
 
     async getById(id: number): Promise<IShippingTermDTO> {

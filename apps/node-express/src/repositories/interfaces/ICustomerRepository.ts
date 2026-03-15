@@ -18,6 +18,7 @@ export type CustomerWithRelations = CustomerModel & {
 
 export interface ICustomerRepository {
     findAll(limit?: number, offset?: number): Promise<CustomerWithRelations[]>
+    count(): Promise<number>
     findById(id: number): Promise<CustomerWithRelations | null>
     findByCode(code: string): Promise<CustomerWithRelations | null>
     findByEmail(email: string): Promise<CustomerWithRelations | null>

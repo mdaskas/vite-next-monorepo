@@ -6,6 +6,7 @@ import type {
 
 export interface IBillingTermRepository {
     findAll(limit?: number, offset?: number): Promise<IBillingTermDTO[]>
+    count(): Promise<number>
     findById(id: number): Promise<IBillingTermDTO | null>
     findByCode(code: string): Promise<IBillingTermDTO | null>
     create(input: CreateBillingTermInput): Promise<IBillingTermDTO>

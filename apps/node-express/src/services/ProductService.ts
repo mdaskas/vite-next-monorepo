@@ -1,9 +1,9 @@
-import type { IProductRepository } from '@repotypes/IProductRepository'
+import type { IProductRepository } from '../repositories/interfaces/IProductRepository'
 import type {
     CreateProductInput,
     UpdateProductInput
 } from '../repositories/ProductRepository'
-import type { IProductService } from '@servicetypes/IProductService'
+import type { IProductService } from './interfaces/IProductService'
 import { BaseService } from './BaseService'
 
 export class ProductService extends BaseService implements IProductService {
@@ -14,9 +14,14 @@ export class ProductService extends BaseService implements IProductService {
         this.repository = repository
     }
 
-    async getAll(limit?: number, offset?: number) {
+    async getAll(limit = 10, offset = 0) {
         this.childLogger.debug('getAll called')
-        return this.repository.findAll(limit, offset)
+        const [data, total] = await Promise.all([
+            this.repository.findAll(limit, offset),
+            this.repository.count()
+        ])
+
+        return { data, total, limit, offset }
     }
 
     async getById(id: number) {

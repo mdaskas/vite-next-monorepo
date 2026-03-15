@@ -4,8 +4,15 @@ import type {
     UpdateProductCategoryInput
 } from '../../repositories/ProductCategoryRepository'
 
+export interface PaginatedProductCategories {
+    data: ProductCategoryModel[]
+    total: number
+    limit: number
+    offset: number
+}
+
 export interface IProductCategoryService {
-    getAll(limit?: number, offset?: number): Promise<ProductCategoryModel[]>
+    getAll(limit?: number, offset?: number): Promise<PaginatedProductCategories>
     getById(id: number): Promise<ProductCategoryModel>
     getByCode(code: string): Promise<ProductCategoryModel | null>
     create(input: CreateProductCategoryInput): Promise<ProductCategoryModel>

@@ -50,8 +50,8 @@ export class CustomerController implements ICustomerController {
                 ? parseInt(req.query.offset as string)
                 : undefined
 
-            const customers = await this.service.getAll(limit, offset)
-            res.json(customers)
+            const result = await this.service.getAll(limit, offset)
+            res.json(result)
         } catch (error) {
             next(error)
         }

@@ -27,6 +27,10 @@ export class ProductCategoryRepository
         })
     }
 
+    async count() {
+        return this.client.productCategory.count()
+    }
+
     async findById(id: number) {
         const category = await this.client.productCategory.findUnique({
             where: { id }

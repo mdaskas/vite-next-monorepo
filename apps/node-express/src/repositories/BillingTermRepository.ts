@@ -42,6 +42,10 @@ export class BillingTermRepository
         return billingTerms.map(BillingTermDTO.toDto)
     }
 
+    async count() {
+        return this.client.billingTerm.count()
+    }
+
     async findById(id: number): Promise<IBillingTermDTO> {
         const billingTerm = await this.client.billingTerm.findUnique({
             where: { id }

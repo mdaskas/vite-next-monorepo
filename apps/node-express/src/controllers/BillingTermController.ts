@@ -40,8 +40,8 @@ export class BillingTermController implements IBillingTermController {
                 ? parseInt(req.query.offset as string)
                 : undefined
 
-            const billingTerm = await this.service.getAll(limit, offset)
-            res.json(billingTerm)
+            const result = await this.service.getAll(limit, offset)
+            res.json(result)
         } catch (error) {
             next(error)
         }
@@ -107,11 +107,11 @@ export class BillingTermController implements IBillingTermController {
         next: NextFunction
     ): Promise<void> => {
         try {
-            const id = Number(req.params.id)
-            if (isNaN(id)) {
+            const code = req.params.code as string
+            if (!code) {
                 res.status(400).json({
                     error: {
-                        message: 'ID parameter is required',
+                        message: 'Code parameter is required',
                         code: 'ERR_VALID'
                     }
                 })
@@ -132,11 +132,12 @@ export class BillingTermController implements IBillingTermController {
                 return
             }
 
+            const existing = await this.service.getByCode(code)
             const billingTerm = await this.service.update(
-                id,
+                existing.id,
                 parsed.data as UpdateBillingTermInput
             )
-            logger.info(`Billing term updated with ID: ${id}`)
+            logger.info(`Billing term updated with code: ${code}`)
             res.json(billingTerm)
         } catch (error) {
             next(error)

@@ -4,8 +4,15 @@ import type {
     UpdateCustomerInput
 } from '@repo/CustomerRepository'
 
+export interface PaginatedCustomers {
+    data: CustomerWithRelations[]
+    total: number
+    limit: number
+    offset: number
+}
+
 export interface ICustomerService {
-    getAll(limit?: number, offset?: number): Promise<CustomerWithRelations[]>
+    getAll(limit?: number, offset?: number): Promise<PaginatedCustomers>
     getById(id: number): Promise<CustomerWithRelations>
     getByCode(code: string): Promise<CustomerWithRelations | null>
     getByEmail(email: string): Promise<CustomerWithRelations | null>

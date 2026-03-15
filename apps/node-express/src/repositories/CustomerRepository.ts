@@ -44,6 +44,10 @@ export class CustomerRepository
         return customers
     }
 
+    async count() {
+        return this.client.customer.count()
+    }
+
     async findById(id: number) {
         const customer = await this.client.customer.findUnique({
             where: { id },

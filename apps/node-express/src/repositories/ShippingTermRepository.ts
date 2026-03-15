@@ -35,6 +35,10 @@ export class ShippingTermRepository
         return shippingTerms.map(ShippingTermDTO.toDto)
     }
 
+    async count() {
+        return this.client.shippingTerm.count()
+    }
+
     async findById(id: number): Promise<IShippingTermDTO> {
         const shippingTerm = await this.client.shippingTerm.findUnique({
             where: { id }

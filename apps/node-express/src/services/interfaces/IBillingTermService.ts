@@ -4,8 +4,15 @@ import type {
     UpdateBillingTermInput
 } from '@/repositories/BillingTermRepository'
 
+export interface PaginatedBillingTerms {
+    data: IBillingTermDTO[]
+    total: number
+    limit: number
+    offset: number
+}
+
 export interface IBillingTermService {
-    getAll(limit?: number, offset?: number): Promise<IBillingTermDTO[]>
+    getAll(limit?: number, offset?: number): Promise<PaginatedBillingTerms>
     getById(id: number): Promise<IBillingTermDTO>
     getByCode(code: string): Promise<IBillingTermDTO>
     create(input: CreateBillingTermInput): Promise<IBillingTermDTO>

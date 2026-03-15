@@ -4,8 +4,15 @@ import type {
     UpdateShippingTermInput
 } from '@repo/ShippingTermRepository'
 
+export interface PaginatedShippingTerms {
+    data: IShippingTermDTO[]
+    total: number
+    limit: number
+    offset: number
+}
+
 export interface IShippingTermService {
-    getAll(limit?: number, offset?: number): Promise<IShippingTermDTO[]>
+    getAll(limit?: number, offset?: number): Promise<PaginatedShippingTerms>
     getById(id: number): Promise<IShippingTermDTO>
     getByCode(code: string): Promise<IShippingTermDTO>
     create(input: CreateShippingTermInput): Promise<IShippingTermDTO>

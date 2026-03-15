@@ -20,7 +20,7 @@ export const createRandomProductCategory = (): ProductCategory => {
   return {
     id: nextCategoryId,
     code: `CAT-${nextCategoryId++}`,
-    description: faker.commerce.productDescription(),
+    description: faker.commerce.department(),
   }
 }
 

@@ -38,8 +38,8 @@ export class ShippingTermController implements IShippingTermController {
                 ? parseInt(req.query.offset as string)
                 : undefined
 
-            const shippingTerms = await this.service.getAll(limit, offset)
-            res.json(shippingTerms)
+            const result = await this.service.getAll(limit, offset)
+            res.json(result)
         } catch (error) {
             next(error)
         }
@@ -105,11 +105,11 @@ export class ShippingTermController implements IShippingTermController {
         next: NextFunction
     ): Promise<void> => {
         try {
-            const id = parseInt(req.params.id as string)
-            if (isNaN(id)) {
+            const code = req.params.code as string
+            if (!code) {
                 res.status(400).json({
                     error: {
-                        message: 'ID parameter must be a valid number',
+                        message: 'Code parameter is required',
                         code: 'ERR_VALID'
                     }
                 })
@@ -130,11 +130,12 @@ export class ShippingTermController implements IShippingTermController {
                 return
             }
 
+            const existing = await this.service.getByCode(code)
             const shippingTerm = await this.service.update(
-                id,
+                existing.id,
                 parsed.data as UpdateShippingTermInput
             )
-            logger.info(`Shipping term updated with ID: ${id}`)
+            logger.info(`Shipping term updated with code: ${code}`)
             res.json(shippingTerm)
         } catch (error) {
             next(error)

@@ -1,7 +1,13 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "@repo/ui/globals.css"
-import { Button } from "../../../packages/ui/src/components/button"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@repo/ui/components/sidebar"
+import { TooltipProvider } from "@repo/ui/components/tooltip"
+import { AppSidebar } from "./components/app-sidebar"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +34,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Button variant="outline" size="lg">
-          My Button
-        </Button>
-        {children}
+        <TooltipProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <header className="flex h-12 items-center gap-2 border-b px-4">
+                <SidebarTrigger className="-ml-1" />
+                <h2 className="text-lg font-semibold text-foreground">
+                  Next Js Application
+                </h2>
+              </header>
+              <main>{children}</main>
+            </SidebarInset>
+          </SidebarProvider>
+        </TooltipProvider>
       </body>
     </html>
   )

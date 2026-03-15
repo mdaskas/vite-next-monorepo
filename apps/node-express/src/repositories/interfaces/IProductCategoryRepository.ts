@@ -6,6 +6,7 @@ import type {
 
 export interface IProductCategoryRepository {
     findAll(limit?: number, offset?: number): Promise<ProductCategoryModel[]>
+    count(): Promise<number>
     findById(id: number): Promise<ProductCategoryModel | null>
     findByCode(code: string): Promise<ProductCategoryModel | null>
     create(input: CreateProductCategoryInput): Promise<ProductCategoryModel>
